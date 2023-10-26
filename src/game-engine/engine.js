@@ -35,8 +35,8 @@
             }
         
             // Iterate throuh every game in games
-            // games.forEach((game, game_id) => {        
-            // // Check if the game is active
+            games.forEach((game, game_id) => {        
+            // Check if the game is active
             // if (game.active) {
             //     // Update the game and store the returned turn boolean
             //     let turn = game.update();
@@ -60,18 +60,18 @@
             //     }
             // }
         
-            // // Check if the game has ended
-            // if (game.ended) {
-            //     // Send ending data to the players
+            // Check if the game has ended
+            if (game.ended) {
+                // Send ending data to the players
                 
-            //     game.player1.socket.emit("game-end", game.endData(game.player1));
-            //     game.player2.socket.emit("game-end", game.endData(game.player2));
+                game.player1.socket.emit("game-end", game.endData(game.player1));
+                game.player2.socket.emit("game-end", game.endData(game.player2));
         
-            //     // Remove the game from games
-            //     games.delete(game_id);
-            //     log(`game#${game_id} has ended with result: ${JSON.stringify(game.endData(game.player1))} - ${games.size} games(s) in progress`);
-            // }
-            // });
+                // Remove the game from games
+                games.delete(game_id);
+                log(`game#${game_id} has ended with result: ${JSON.stringify(game.endData(game.player1))} - ${games.size} games(s) in progress`);
+            }
+            });
         
             // Tickrate of the game loop in ms
         }, 1000 / TICKRATE);

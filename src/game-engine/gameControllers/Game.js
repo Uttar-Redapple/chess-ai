@@ -46,68 +46,6 @@ const Game = function (player1, player2) {
 };
 
 // Update class method
-Game.prototype.update = function () {
-
-    // Set game active property to false by default
-    this.active = false;
-
-    // Loop through each ball
-    for (let i = 0; i < this.balls.length; i++) {
-
-        // Current ball
-        const ball = this.balls[i];
-
-        // Loop through the other balls and resolve their collisions
-        for (let j = i + 1; j < this.balls.length; j++) {
-            const collidingBall = this.balls[j];
-            physics.collideBalls(ball, collidingBall);
-        }
-
-        // Resolve the collision with the cushions
-        physics.collideCushions(ball, WIDTH, HEIGHT);
-
-        // Update ball motion
-        let ballActive = physics.ballMotion(ball);
-        // If the ball is moving, set the active property of the game to true
-        if (ballActive) this.active = true;
-
-        // Iterate through each pocket and check if the ball has been pocketed
-        POCKETS.forEach(pocket => {
-            if (physics.doBallsOverlap(ball, pocket)) events.ballPotted(this, ball, pocket);
-        });
-
-    }
-
-    // If all balls have stopped moving
-    if (!this.active) {
-
-        // If there was a foul or no ball potted, change the turn
-        if (this.foul || !this.potted) {
-            [this.turn, this.nextTurn] = [this.nextTurn, this.turn];
-            this.turnTracker[this.turn.id] == true;
-            this.turnTracker[this.nextTurn.id] == false
-            console.log('Change Turn :',this.turnTracker);
-        };
-
-        // Reset foul and potted properties
-        this.foul = false;
-        this.potted = false;
-        this.cueballFoul = false;
-
-        if (this.player1.score >= 8) this.end(this.player1);
-        if (this.player2.score >= 8) this.end(this.player2);
-
-    }
-
-    // Return whether there is an update in turns
-    return !this.active;
-
-};
-
-
-
-
-
 
 //Check Turn Timer Tracker Status
 Game.prototype.turnTackerStatus = function (id){
@@ -116,7 +54,7 @@ Game.prototype.turnTackerStatus = function (id){
 
 // Game end method
 Game.prototype.end = function (winner) {
-
+    console.log('Ending Game!')
     // Set winner's score to 8
     winner.score = 8;
     // Get loser

@@ -84,6 +84,7 @@ let setNSP = (gameIo) => {
             if (player.inQueue) queue.remove(player);
             // If player in game, end the game with the opponent as the winner
             if (player.inGame){
+              player.life-=1;
               if((player.life == 0) || !(player.game.player1.isOnline || player.game.player2.isOnline)){
                 player.game.end(
                   player == player.game.player1? player.game.player2: player.game.player1
