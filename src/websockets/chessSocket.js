@@ -50,7 +50,7 @@ let setNSP = (gameIo) => {
         /**
          * Socket Events For Application Logic.
         **/
-                 // On socket joining the queue
+                   // On socket joining the queue
                    socket.on("queue-join", () => {
                     console.log("queue-join hit")
                      // Check if the player is not in queue or in game and enqueue them
@@ -60,6 +60,17 @@ let setNSP = (gameIo) => {
                          `${player.user_name}#${player.id} has joined the queue - ${queue.size} player(s) in queue`
                        );
                      }
+                   });
+
+                   socket.on("update-move",(data) => {
+                    if (typeof data == 'string') {
+                      data = JSON.parse(data);
+                    }
+                    if(player.inGame){
+                      let {opponent} = player.game.getOpponent(player);
+                      console.log('opponent ',opponent);
+                      opponent.socket.emit('update-details',data);
+                    }
                    });
          
                    // On socket leaving the queue

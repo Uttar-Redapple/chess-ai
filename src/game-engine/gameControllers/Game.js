@@ -46,6 +46,12 @@ const Game = function (player1, player2) {
 };
 
 // Update class method
+Game.prototype.getOpponent = function (player){
+    let opponent = (player == this.player1 ? this.player2 : this.player1);
+    return {
+        opponent : opponent
+    }
+}
 
 //Check Turn Timer Tracker Status
 Game.prototype.turnTackerStatus = function (id){
