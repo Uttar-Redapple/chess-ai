@@ -62,6 +62,7 @@ let setNSP = (gameIo) => {
                      }
                    });
 
+                   /** Main Gameplay Subject to change in future to backend driven chess engine */
                    socket.on("update-move",(data) => {
                     if (typeof data == 'string') {
                       data = JSON.parse(data);
