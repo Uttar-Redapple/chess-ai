@@ -73,6 +73,18 @@ let setNSP = (gameIo) => {
                       opponent.socket.emit('update-details',data);
                     }
                    });
+
+                   socket.on("update-score",(data) => {
+                    if (typeof data == 'string') {
+                      data = JSON.parse(data);
+                    }
+                    console.log('GameResult : ',data);
+                    if (player.inGame){
+                      player.game.end(
+                        player == player.game.player1? player.game.player2: player.game.player1
+                     );
+                    }
+                   })
          
                    // On socket leaving the queue
                    socket.on("queue-leave", () => {
